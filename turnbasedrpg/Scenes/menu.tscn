@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://rpoul2fh61hp"]
+
+[ext_resource type="Texture2D" uid="uid://dmtojbxyg04cr" path="res://Sprites/backgroundCastles.png" id="1_1rerr"]
+[ext_resource type="Script" uid="uid://bkrsdjdw482x" path="res://Scripts/menu.gd" id="1_xhh6f"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cayip"]
+font_size = 50
+font_color = Color(0.77, 0.4928, 0.75614, 1)
+outline_size = 10
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xhh6f")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -129.0
+offset_top = -380.0
+offset_right = 1314.0
+offset_bottom = 1063.0
+texture = ExtResource("1_1rerr")
+expand_mode = 4
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 319.0
+offset_top = 122.0
+offset_right = 857.0
+offset_bottom = 191.0
+text = "Micro Turn-Based RPG"
+label_settings = SubResource("LabelSettings_cayip")
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 364.0
+offset_right = 672.0
+offset_bottom = 425.0
+theme_override_font_sizes/font_size = 35
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 433.0
+offset_right = 672.0
+offset_bottom = 494.0
+theme_override_font_sizes/font_size = 35
+text = "Quit"
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

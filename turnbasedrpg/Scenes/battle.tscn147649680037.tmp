@@ -1,0 +1,152 @@
+[gd_scene load_steps=16 format=3 uid="uid://cqw7npudxgttm"]
+
+[ext_resource type="Script" uid="uid://34tjqajnash3" path="res://Scripts/game_manager.gd" id="1_1otgo"]
+[ext_resource type="Texture2D" uid="uid://dmtojbxyg04cr" path="res://Sprites/backgroundCastles.png" id="1_w7k78"]
+[ext_resource type="Texture2D" uid="uid://divpfctcpa43i" path="res://Sprites/Dragon.png" id="3_1otgo"]
+[ext_resource type="PackedScene" uid="uid://cgiqmfsicgos" path="res://Scenes/character.tscn" id="3_1ruyk"]
+[ext_resource type="Script" uid="uid://b63ayfjxagky2" path="res://Scripts/combat_action.gd" id="4_ww2ai"]
+[ext_resource type="Resource" uid="uid://bdjbb1rkynycw" path="res://Combat Actions/slash.tres" id="5_lrv64"]
+[ext_resource type="Resource" uid="uid://dg8h8n3428oxr" path="res://Combat Actions/heavy_hit.tres" id="6_qeyqd"]
+[ext_resource type="Resource" uid="uid://2s0raul78sla" path="res://Combat Actions/heal.tres" id="7_k7mbx"]
+[ext_resource type="Script" uid="uid://c3ay45of5iduc" path="res://Scripts/combat_action_button.gd" id="8_lrv64"]
+[ext_resource type="Script" uid="uid://dwmqfl70s4g1y" path="res://Scripts/combat_actions_ui.gd" id="8_qeyqd"]
+[ext_resource type="Texture2D" uid="uid://djwtp6ht3yfxn" path="res://Sprites/Reptile.png" id="9_rssjf"]
+[ext_resource type="Script" uid="uid://bxp51pl3g0ohb" path="res://Scripts/end_screen.gd" id="10_k7mbx"]
+[ext_resource type="AudioStream" uid="uid://dkyty1300muhc" path="res://Audio/battle_music.wav" id="13_heh15"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_upb72"]
+bg_color = Color(0.24, 0.408, 0.6, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rssjf"]
+font_size = 42
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("player_character", "ai_character")]
+script = ExtResource("1_1otgo")
+player_character = NodePath("Player_Character")
+ai_character = NodePath("AI_Character")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -4096
+offset_left = -780.0
+offset_top = -512.0
+offset_right = 819.0
+offset_bottom = 512.0
+texture = ExtResource("1_w7k78")
+stretch_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player_Character" parent="." instance=ExtResource("3_1ruyk")]
+position = Vector2(-230, 0)
+is_player = true
+cur_health = 40
+max_health = 40
+combat_actions = Array[ExtResource("4_ww2ai")]([ExtResource("5_lrv64"), ExtResource("6_qeyqd"), ExtResource("7_k7mbx")])
+display_texture = ExtResource("3_1otgo")
+
+[node name="AI_Character" parent="." instance=ExtResource("3_1ruyk")]
+position = Vector2(230, 0)
+cur_health = 40
+max_health = 40
+combat_actions = Array[ExtResource("4_ww2ai")]([ExtResource("5_lrv64"), ExtResource("6_qeyqd"), ExtResource("7_k7mbx")])
+facing_left = true
+display_texture = ExtResource("9_rssjf")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CombatActionsUI" type="Panel" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -225.0
+offset_top = -166.0
+offset_right = 225.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("8_qeyqd")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/CombatActionsUI"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 6.0
+offset_right = 233.0
+offset_bottom = 148.0
+
+[node name="CombatActionButton" type="Button" parent="CanvasLayer/CombatActionsUI/ButtonContainer"]
+layout_mode = 2
+text = "Slash"
+script = ExtResource("8_lrv64")
+
+[node name="CombatActionButton2" type="Button" parent="CanvasLayer/CombatActionsUI/ButtonContainer"]
+layout_mode = 2
+text = "Slash"
+script = ExtResource("8_lrv64")
+
+[node name="CombatActionButton3" type="Button" parent="CanvasLayer/CombatActionsUI/ButtonContainer"]
+layout_mode = 2
+text = "Slash"
+script = ExtResource("8_lrv64")
+
+[node name="PassTurnButton" type="Button" parent="CanvasLayer/CombatActionsUI/ButtonContainer"]
+layout_mode = 2
+text = "Pass Turn"
+
+[node name="Description" type="RichTextLabel" parent="CanvasLayer/CombatActionsUI"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 7.0
+offset_right = 435.0
+offset_bottom = 141.0
+bbcode_enabled = true
+
+[node name="EndScreen" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_upb72")
+script = ExtResource("10_k7mbx")
+
+[node name="HeaderText" type="Label" parent="CanvasLayer/EndScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -262.0
+offset_top = -117.0
+offset_right = 263.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Player has won the game!"
+label_settings = SubResource("LabelSettings_rssjf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="CanvasLayer/EndScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = 26.0
+offset_right = 76.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play Again"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_heh15")
+
+[connection signal="pressed" from="CanvasLayer/CombatActionsUI/ButtonContainer/PassTurnButton" to="CanvasLayer/CombatActionsUI" method="_on_pass_turn_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/EndScreen/PlayAgainButton" to="CanvasLayer/EndScreen" method="_on_play_again_button_pressed"]

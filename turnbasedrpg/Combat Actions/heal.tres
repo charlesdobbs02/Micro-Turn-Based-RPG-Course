@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CombatAction" load_steps=2 format=3 uid="uid://2s0raul78sla"]
+
+[ext_resource type="Script" uid="uid://b63ayfjxagky2" path="res://Scripts/combat_action.gd" id="1_f3m6k"]
+
+[resource]
+script = ExtResource("1_f3m6k")
+display_name = "Heal"
+description = "Heal for 10 hit points"
+melee_damage = 0
+heal_amount = 10
+base_weight = 100
+metadata/_custom_type_script = "uid://b63ayfjxagky2"
